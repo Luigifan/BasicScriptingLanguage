@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BasicScriptingLanguage
 {
@@ -46,6 +47,20 @@ namespace BasicScriptingLanguage
                     }
                 }
 
+                if(IsCommand(line))
+                {
+                    if (line.StartsWith("echo"))
+                    {
+                        BasicOutput.Echo(line, lineCount);
+                    }
+                    else if (line.StartsWith("showQuestionDialog"))
+                    {
+                        QuestionDialog.ShowQuestionDialog(line, lineCount);
+                    }
+                    else if (line.StartsWith("runProcess"))
+                        ProcessExecutor.StartProcess(line, lineCount);
+                }
+
                 lineCount++;
             }
         }
@@ -62,6 +77,20 @@ namespace BasicScriptingLanguage
                     return false;
             }
             return false;
+        }
+
+        public string RetrieveVariableValue(string variableToRetrieve)
+        {
+            bool foundVar = false;
+            for(int i = 0; i < DeclaredValues.Count(); i++)
+            {
+               if (DeclaredValues[i].Key == variableToRetrieve)
+                   return DeclaredValues[i].Value;
+            }
+            if (foundVar == false)
+                throw new KeyNotFoundException("Script error: Couldn't find the variable '" + variableToRetrieve + "'.");
+
+            return null;
         }
 
         private bool IsAssigningVariable(string line)
@@ -84,16 +113,35 @@ namespace BasicScriptingLanguage
                     throw new InvalidDataException("Script error at line " + lineCount + ": Expected equals sign, didn't get.");
                 else
                 {
-                    string possibleNewValue;
+                    string possibleNewValue = "";
+                    bool foundVar = false;
                     if(IsCommand(split[2]))
                     {
-                        //execute command and receive input if necessary
+                        //showQuestionMessage("message","Yes","No","Unsure");
+                        if (split[2].StartsWith("showQuestionMessage"))
+                        {
+                            possibleNewValue = QuestionDialog.ShowQuestionDialog(line, lineCount);
+                        }
+                        else
+                            throw new InvalidDataException("Script error at line " + lineCount + ": Command is not allowed to be run here as it does not return a value.");
                     }
-                    bool foundVar = false;
+                    else
+                    {
+                        possibleNewValue = split[2];
+                    }
+                    
                     for(int i = 0; i < DeclaredValues.Count; i++)
                     {
-
+                        if (DeclaredValues[i].Key == split[0])
+                        {
+                            DeclaredValues.RemoveAt(i);
+                            DeclaredValues.Add(new KeyValuePair<string, string>(split[0], possibleNewValue));
+                            foundVar = true;
+                        }
                     }
+
+                    if (foundVar == false)
+                        throw new InvalidDataException("Script error at line " + lineCount + ": Value not previously assigned to.");
                 }
             }
             catch(InvalidDataException ex)
@@ -105,11 +153,6 @@ namespace BasicScriptingLanguage
             }
         }
 
-        private void ExecuteCommand(string p)
-        {
-            throw new NotImplementedException();
-        }
-
         private bool IsCommand(string line)
         {
             if (line.Contains("showQuestionMessage"))
@@ -117,6 +160,8 @@ namespace BasicScriptingLanguage
             if (line.Contains("showInfoMessage"))
                 return true;
             if (line.Contains("runProcess"))
+                return true;
+            if (line.Contains("echo"))
                 return true;
 
 
