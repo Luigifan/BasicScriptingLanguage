@@ -27,19 +27,19 @@ namespace BasicScriptingLanguage
                         //We need to combine strings
                         if(split[1].Contains('+'))
                         {
-                            string replacedConstants = Constants.ReplaceConstantsInString(line);
-                            var parseParams = replacedConstants.Split('+');
-                            string fullParams = "";
-                            for(int i = 0; i < parseParams.Count(); i++)
-                            {
-                                fullParams += parseParams[i];
-                            }
-                            Process.Start(fullParams);
+                            //string replacedConstants = Constants.ReplaceConstantsInString(line);
+                            //var parseParams = replacedConstants.Split('+');
+                            //string fullParams = "";
+                            //for(int i = 0; i < parseParams.Count(); i++)
+                            //{
+                            //    fullParams += parseParams[i];
+                            //}
+                            //Process.Start(fullParams);
                         }
                         else
                         {
-                            string replacedConstants = Constants.ReplaceConstantsInString(line);
-                            Process.Start(replacedConstants);
+                            //string replacedConstants = Constants.ReplaceConstantsInString(line);
+                            //Process.Start(replacedConstants);
                         }
 
                     }

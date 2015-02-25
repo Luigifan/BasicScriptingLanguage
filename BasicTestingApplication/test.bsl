@@ -1,3 +1,3 @@
 ﻿#BasicScriptFile
 echo("Hi")
-echo("" + {CURRENTDIRECTORY});
+echo("The current directory is " + {CURRENTDIRECTORY})

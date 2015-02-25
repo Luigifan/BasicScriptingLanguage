@@ -11,16 +11,12 @@ namespace BasicScriptingLanguage
         public static string CURRENTDIRECTORY = Environment.CurrentDirectory;
 
 
-        public static string ReplaceConstantsInString(string line)
+        public static string RetrieveConstantValue(string line)
         {
-            string replaced = "";
-            try
-            {
-                replaced = line.Replace("{CURRENTDIRECTORY}", CURRENTDIRECTORY);
-            }
-            catch
-            { /*Nothing more to replace!*/ }
-            return replaced;
+            if (line == "CURRENTDIRECTORY")
+                return CURRENTDIRECTORY;
+
+            return "ayy lmao";
         }
 
     }

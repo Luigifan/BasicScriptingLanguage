@@ -31,6 +31,9 @@ namespace BasicScriptingLanguage
                         throw new InvalidDataException("First line is not '#BasicScriptFile' or is not a BasicScriptFile!");
                 }
 
+                if (line == "\n")
+                    break;
+
                 if(line.StartsWith("#"))
                 {/*Comment, ignore*/}
 
@@ -91,6 +94,25 @@ namespace BasicScriptingLanguage
                 throw new KeyNotFoundException("Script error: Couldn't find the variable '" + variableToRetrieve + "'.");
 
             return null;
+        }
+
+        public string[] ReplaceWithVarsConstants(string[] replaceWith)
+        {
+            List<string> finals = new List<string>();
+            for (int i = 0; i < replaceWith.Count(); i++ )
+            {
+                string toReplace = replaceWith[i];
+                if(toReplace.Contains('{')) //constants
+                {
+                    finals.Add(toReplace.Trim(new char[] { '{', '}' }));
+                }
+                else if(toReplace.Contains('[')) //variable
+                {
+                    finals.Add(RetrieveVariableValue(toReplace.Trim(new char[] { '[', ']' })));
+                }
+            }
+
+            return finals.ToArray<string>();
         }
 
         private bool IsAssigningVariable(string line)
