@@ -12,10 +12,8 @@ namespace BasicScriptingLanguage
         {
             try
             {
-                //echo("Hello");
-                var splitIntoParams = line.Split(new char[]{'(', ')'});
-
-                Console.Write("");
+                //string paramsReplaced = BasicScriptFile.MainScriptInterepreter.ReplaceWithVarsConstants(line);
+                Console.WriteLine(BasicScriptFile.MainScriptInterepreter.ReplaceWithVarsConstants(line));
             }
             catch(System.IO.InvalidDataException ex)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -96,23 +97,26 @@ namespace BasicScriptingLanguage
             return null;
         }
 
-        public string[] ReplaceWithVarsConstants(string[] replaceWith)
+
+        public string ReplaceWithVarsConstants(string replaceWith)
         {
-            List<string> finals = new List<string>();
-            for (int i = 0; i < replaceWith.Count(); i++ )
+            string finalStringReplace = replaceWith;
+            string patternConstants = @"\{(.*?)}\}";
+            string patternVariables = @"\[(.*?)}\]";
+
+            Regex matchConstants = new Regex(patternConstants, RegexOptions.None);
+            Regex matchVariables = new Regex(patternVariables, RegexOptions.None);
+            //if(matchConstants.IsMatch(finalStringReplace))
+            //{
+                //finals.Add(Constants.RetrieveConstantValue(matchConstants.Match(replaceWith).Value));
+                finalStringReplace = matchConstants.Replace(finalStringReplace, Constants.CURRENTDIRECTORY);
+            //}
+            if(matchVariables.IsMatch(finalStringReplace))
             {
-                string toReplace = replaceWith[i];
-                if(toReplace.Contains('{')) //constants
-                {
-                    finals.Add(toReplace.Trim(new char[] { '{', '}' }));
-                }
-                else if(toReplace.Contains('[')) //variable
-                {
-                    finals.Add(RetrieveVariableValue(toReplace.Trim(new char[] { '[', ']' })));
-                }
+                matchVariables.Replace(finalStringReplace, "");
             }
 
-            return finals.ToArray<string>();
+            return finalStringReplace;
         }
 
         private bool IsAssigningVariable(string line)
