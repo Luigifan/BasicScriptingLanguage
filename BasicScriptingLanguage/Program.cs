@@ -9,7 +9,9 @@ namespace BasicScriptingLanguage
     public class BasicScriptFile
     {
         public static ScriptInterpreting MainScriptInterepreter = new ScriptInterpreting();
+        public static string StandardOutput;
 
+        [STAThread]
         public static void ExecuteScript(string _file)
         {
             MainScriptInterepreter.ReadScript(_file);

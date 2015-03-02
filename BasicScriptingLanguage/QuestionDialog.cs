@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,63 +22,73 @@ namespace BasicScriptingLanguage
         {
             //(max of 3)
             //showQuestionDialog("body of message","Yes","No","Unsure");
+            //showQuestionDialog|"body","Yes","No","Unsure"
             try
             {
-                var split = line.Split(new char[] { '(', ')' });
-                if (split[0] == "showQuestionDialog")
+                var split = line.Split('|');
+                //splits into 
+                //showQuestionDialog
+                //and
+                //"body","yes","no","unsure"
+                if(split[1].Contains(',') != true)
                 {
-                    //split[0] is 'showQuestionDialog'
-                    //split[1] is "body of message","yes","no","unsure"
-                    var parsingParams = split[1].Split(new char[] { ',' });
-                    //should be no more than 4 (body and 3 options)
-                    if (parsingParams.Count() > 4)
-                        throw new InvalidDataException("Script error at line " + lineCount + ": Too many arguments (no more than 4, got " + parsingParams.Count() + ")");
-                    else
-                    {
-                        if (parsingParams.Count() == 2)
-                        {
-                            MessageBoxManager.OK = parsingParams[1].Trim('"');
-                            DialogResult dr = MessageBox.Show(parsingParams[0], "", MessageBoxButtons.OK);
-                            switch (dr)
-                            {
-                                case (DialogResult.OK):
-                                    return parsingParams[1];
-                            }
-                        }
-                        if (parsingParams.Count() == 3)
-                        {
-                            MessageBoxManager.OK = parsingParams[1].Trim('"');
-                            MessageBoxManager.Cancel = parsingParams[2].Trim('"');
-                            DialogResult dr = MessageBox.Show(parsingParams[0], "", MessageBoxButtons.OKCancel);
-                            switch (dr)
-                            {
-                                case (DialogResult.OK):
-                                    return parsingParams[1];
-                                case (DialogResult.Cancel):
-                                    return parsingParams[2];
-                            }
-                        }
-                        if (parsingParams.Count() == 4)
-                        {
-                            MessageBoxManager.Yes = parsingParams[1].Trim('"');
-                            MessageBoxManager.No = parsingParams[2].Trim('"');
-                            MessageBoxManager.Cancel = parsingParams[3].Trim('"');
-                            DialogResult dr = MessageBox.Show(parsingParams[0], "", MessageBoxButtons.YesNoCancel);
-                            switch (dr)
-                            {
-                                case (DialogResult.Yes):
-                                    return parsingParams[1];
-                                case (DialogResult.No):
-                                    return parsingParams[2];
-                                case (DialogResult.Cancel):
-                                    return parsingParams[3];
-                            }
-                        }
-                    }
+                    DialogResult dr = MessageBox.Show(BasicScriptFile.MainScriptInterepreter.ReplaceWithVarsConstants(split[1].Trim('"')), 
+                        ScriptMetadata.SCRIPT_TITLE);
+                    return dr.ToString();
                 }
                 else
                 {
-                    throw new InvalidDataException("Script error at line " + lineCount + ": Invalid");
+                    //Splits into parts of args
+                    //Count 2 if one button
+                    //3 if two buttons
+                    //4 if 3 buttons
+                    //splitArgs[0] is the body
+                    //var splitArgs = split[1].Split(',');
+                    var splitArgs = Regex.Split(split[1], @",(?=(?:[^""]*""[^""]*"")*[^""]*$)");
+                    DialogResult dr;
+                    switch(splitArgs.Count())
+                    {
+                        case(2):
+                            MessageBoxManager.OK = splitArgs[1].Trim('"').Trim('"');
+                            MessageBoxManager.Register();
+                            dr = MessageBox.Show(BasicScriptFile.MainScriptInterepreter.ReplaceWithVarsConstants(splitArgs[0].Trim('"')), 
+                                ScriptMetadata.SCRIPT_TITLE, 
+                                MessageBoxButtons.OK);
+                            MessageBoxManager.Unregister();
+
+                            return splitArgs[1];
+                        case(3):
+                            MessageBoxManager.OK = splitArgs[1].Trim('"');
+                            MessageBoxManager.Cancel = splitArgs[2].Trim('"');
+                            MessageBoxManager.Register();
+                            dr = MessageBox.Show(BasicScriptFile.MainScriptInterepreter.ReplaceWithVarsConstants(splitArgs[0].Trim('"')),
+                                ScriptMetadata.SCRIPT_TITLE, 
+                                MessageBoxButtons.OKCancel);
+                            MessageBoxManager.Unregister();
+                            if (dr == DialogResult.OK)
+                                return splitArgs[1];
+                            else if (dr == DialogResult.Cancel)
+                                return splitArgs[2];
+                            return dr.ToString();
+                        case(4):
+                            MessageBoxManager.Yes = splitArgs[1].Trim('"');
+                            MessageBoxManager.No = splitArgs[2].Trim('"');
+                            MessageBoxManager.Cancel = splitArgs[3].Trim('"');
+                            MessageBoxManager.Register();
+                            dr = MessageBox.Show(BasicScriptFile.MainScriptInterepreter.ReplaceWithVarsConstants(splitArgs[0].Trim('"')),
+                                ScriptMetadata.SCRIPT_TITLE, 
+                                MessageBoxButtons.YesNoCancel);
+                            MessageBoxManager.Unregister();
+
+                            if(dr == DialogResult.Yes)
+                                return splitArgs[1];
+                            else if(dr == DialogResult.No)
+                                return splitArgs[2];
+                            else if(dr == DialogResult.Cancel)
+                                return splitArgs[3];
+
+                            return dr.ToString();
+                    }
                 }
             }
             catch (InvalidDataException ex)

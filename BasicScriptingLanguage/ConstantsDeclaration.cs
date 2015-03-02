@@ -11,6 +11,8 @@ namespace BasicScriptingLanguage
     {
         public static string CURRENTDIRECTORY = Environment.CurrentDirectory;
 
+        //Metadata
+        public static string SCRIPT_TITLE;
 
         public static string RetrieveConstantValue(string line)
         {
