@@ -16,7 +16,7 @@ namespace BasicScriptingLanguageEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MDIParent());
+            Application.Run(new TabbedUI());
         }
     }
 }
