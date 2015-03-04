@@ -21,6 +21,19 @@ namespace BasicScriptingLanguageEditor
             fileStatusLabel.Text = "";
         }
 
+        public TabbedUI(string fileToOpen)
+        {
+            Font = SystemFonts.MessageBoxFont;
+            InitializeComponent();
+            AddTab();
+
+            EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+            tabControlsEditor.LoadFile(fileToOpen);
+            tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(fileToOpen);
+            this.Text = "BasicScriptingLanuage Editor - " + Path.GetFileName(fileToOpen);
+            fileStatusLabel.Text = "Path: " + fileToOpen;
+        }
+
         private void AddTab()
         {
             tabControl1.TabPages.Add("New Document");

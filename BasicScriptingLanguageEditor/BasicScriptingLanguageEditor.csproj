@@ -114,6 +114,12 @@
     <Compile Include="TabbedUI.Designer.cs">
       <DependentUpon>TabbedUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestScript.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestScript.Designer.cs">
+      <DependentUpon>TestScript.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="EditorControl.resx">
       <DependentUpon>EditorControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,6 +141,9 @@
     </Compile>
     <EmbeddedResource Include="TabbedUI.resx">
       <DependentUpon>TabbedUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestScript.resx">
+      <DependentUpon>TestScript.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="BasicScriptingLanguageEditor_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />

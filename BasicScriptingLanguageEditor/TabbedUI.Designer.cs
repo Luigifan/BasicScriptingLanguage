@@ -56,6 +56,8 @@
             this.fileStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuItem19 = new System.Windows.Forms.MenuItem();
             this.menuItem20 = new System.Windows.Forms.MenuItem();
+            this.menuItem21 = new System.Windows.Forms.MenuItem();
+            this.menuItem22 = new System.Windows.Forms.MenuItem();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,6 +66,7 @@
             this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem1,
             this.menuItem2,
+            this.menuItem21,
             this.menuItem3,
             this.menuItem4});
             // 
@@ -94,7 +97,7 @@
             // 
             // menuItem3
             // 
-            this.menuItem3.Index = 2;
+            this.menuItem3.Index = 3;
             this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem17,
             this.menuItem18});
@@ -102,7 +105,7 @@
             // 
             // menuItem4
             // 
-            this.menuItem4.Index = 3;
+            this.menuItem4.Index = 4;
             this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem16});
             this.menuItem4.Text = "&Help";
@@ -248,6 +251,19 @@
             this.menuItem20.Text = "Register File Types";
             this.menuItem20.Click += new System.EventHandler(this.menuItem20_Click);
             // 
+            // menuItem21
+            // 
+            this.menuItem21.Index = 2;
+            this.menuItem21.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem22});
+            this.menuItem21.Text = "&Run";
+            // 
+            // menuItem22
+            // 
+            this.menuItem22.Index = 0;
+            this.menuItem22.Shortcut = System.Windows.Forms.Shortcut.F5;
+            this.menuItem22.Text = "&Test Script..";
+            // 
             // TabbedUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -295,5 +311,7 @@
         private System.Windows.Forms.ToolStripStatusLabel fileStatusLabel;
         private System.Windows.Forms.MenuItem menuItem19;
         private System.Windows.Forms.MenuItem menuItem20;
+        private System.Windows.Forms.MenuItem menuItem21;
+        private System.Windows.Forms.MenuItem menuItem22;
     }
 }

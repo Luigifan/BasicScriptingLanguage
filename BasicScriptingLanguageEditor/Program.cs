@@ -20,7 +20,12 @@ namespace BasicScriptingLanguageEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TabbedUI());
+            if(args.Length > 0)
+            {
+                Application.Run(new TabbedUI(args[0]));
+            }
+            else
+                Application.Run(new TabbedUI());
         }
 
         public static void RegisterFileAssociations()
