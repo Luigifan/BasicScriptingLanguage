@@ -260,6 +260,19 @@ namespace BasicScriptingLanguageEditor
                 fileStatusLabel.Text = "";
             }
         }
+
+        //Register
+        private void menuItem20_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Program.RegisterFileAssociations();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error: \nTry running the program as administrator." + ex.Message, "BasicScriptingLanguage Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         //end of class
     }
 }

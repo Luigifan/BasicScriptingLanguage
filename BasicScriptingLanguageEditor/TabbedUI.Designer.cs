@@ -54,6 +54,8 @@
             this.menuItem18 = new System.Windows.Forms.MenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.fileStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.menuItem19 = new System.Windows.Forms.MenuItem();
+            this.menuItem20 = new System.Windows.Forms.MenuItem();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,7 +87,9 @@
             this.menuItem12,
             this.menuItem13,
             this.menuItem14,
-            this.menuItem15});
+            this.menuItem15,
+            this.menuItem19,
+            this.menuItem20});
             this.menuItem2.Text = "&Edit";
             // 
             // menuItem3
@@ -233,6 +237,17 @@
             this.fileStatusLabel.Size = new System.Drawing.Size(30, 17);
             this.fileStatusLabel.Text = "filler";
             // 
+            // menuItem19
+            // 
+            this.menuItem19.Index = 4;
+            this.menuItem19.Text = "-";
+            // 
+            // menuItem20
+            // 
+            this.menuItem20.Index = 5;
+            this.menuItem20.Text = "Register File Types";
+            this.menuItem20.Click += new System.EventHandler(this.menuItem20_Click);
+            // 
             // TabbedUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,5 +293,7 @@
         private System.Windows.Forms.MenuItem menuItem18;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel fileStatusLabel;
+        private System.Windows.Forms.MenuItem menuItem19;
+        private System.Windows.Forms.MenuItem menuItem20;
     }
 }
