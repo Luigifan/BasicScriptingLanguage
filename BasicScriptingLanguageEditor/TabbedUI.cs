@@ -47,6 +47,7 @@ namespace BasicScriptingLanguageEditor
             tabControl1.TabPages[tabControl1.TabPages.Count - 1].ImageIndex = 0;
             tabControl1.SelectedIndex = tabControl1.TabPages.Count - 1;
             tabControl1.TabPages[tabControl1.TabPages.Count - 1].Controls.Find("EDITORCONTROL", false)[0].Select();
+            tabControl1.TabPages[tabControl1.TabPages.Count - 1].UseVisualStyleBackColor = true;
         }
 
         //Handlers
@@ -284,6 +285,30 @@ namespace BasicScriptingLanguageEditor
             catch(Exception ex)
             {
                 MessageBox.Show("Error: \nTry running the program as administrator." + ex.Message, "BasicScriptingLanguage Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        //Test script
+        private void menuItem22_Click(object sender, EventArgs e)
+        {
+            EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+            TestScript ts;
+
+            if(tabControlsEditor.CurrentFile != "New Document")
+            {
+                if(tabControlsEditor.HasChanges)
+                {
+                    tabControlsEditor.SaveFile(tabControlsEditor.CurrentFile);
+                    fileStatusLabel.Text = string.Format("Saved to {0} successfully!", Path.GetFileName(tabControlsEditor.CurrentFile));
+                    tabControl1.TabPages[tabControl1.SelectedIndex].Text = tabControl1.TabPages[tabControl1.SelectedIndex].Text.Trim('*');
+                }
+
+                ts = new TestScript(tabControlsEditor.CurrentFile);
+                ts.ShowDialog();
+            }
+            else
+            {
+
             }
         }
         //end of class

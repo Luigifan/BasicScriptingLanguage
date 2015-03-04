@@ -32,9 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TabbedUI));
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuItem1 = new System.Windows.Forms.MenuItem();
-            this.menuItem2 = new System.Windows.Forms.MenuItem();
-            this.menuItem3 = new System.Windows.Forms.MenuItem();
-            this.menuItem4 = new System.Windows.Forms.MenuItem();
             this.menuItem5 = new System.Windows.Forms.MenuItem();
             this.menuItem6 = new System.Windows.Forms.MenuItem();
             this.menuItem7 = new System.Windows.Forms.MenuItem();
@@ -42,22 +39,25 @@
             this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.menuItem10 = new System.Windows.Forms.MenuItem();
             this.menuItem11 = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem12 = new System.Windows.Forms.MenuItem();
             this.menuItem13 = new System.Windows.Forms.MenuItem();
             this.menuItem14 = new System.Windows.Forms.MenuItem();
             this.menuItem15 = new System.Windows.Forms.MenuItem();
-            this.menuItem16 = new System.Windows.Forms.MenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.menuItem17 = new System.Windows.Forms.MenuItem();
-            this.menuItem18 = new System.Windows.Forms.MenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.fileStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuItem19 = new System.Windows.Forms.MenuItem();
             this.menuItem20 = new System.Windows.Forms.MenuItem();
             this.menuItem21 = new System.Windows.Forms.MenuItem();
             this.menuItem22 = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.menuItem17 = new System.Windows.Forms.MenuItem();
+            this.menuItem18 = new System.Windows.Forms.MenuItem();
+            this.menuItem4 = new System.Windows.Forms.MenuItem();
+            this.menuItem16 = new System.Windows.Forms.MenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.fileStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,33 +82,6 @@
             this.menuItem10,
             this.menuItem11});
             this.menuItem1.Text = "&File";
-            // 
-            // menuItem2
-            // 
-            this.menuItem2.Index = 1;
-            this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem12,
-            this.menuItem13,
-            this.menuItem14,
-            this.menuItem15,
-            this.menuItem19,
-            this.menuItem20});
-            this.menuItem2.Text = "&Edit";
-            // 
-            // menuItem3
-            // 
-            this.menuItem3.Index = 3;
-            this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem17,
-            this.menuItem18});
-            this.menuItem3.Text = "&Tabs";
-            // 
-            // menuItem4
-            // 
-            this.menuItem4.Index = 4;
-            this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem16});
-            this.menuItem4.Text = "&Help";
             // 
             // menuItem5
             // 
@@ -154,6 +127,18 @@
             this.menuItem11.Text = "E&xit";
             this.menuItem11.Click += new System.EventHandler(this.menuItem11_Click);
             // 
+            // menuItem2
+            // 
+            this.menuItem2.Index = 1;
+            this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem12,
+            this.menuItem13,
+            this.menuItem14,
+            this.menuItem15,
+            this.menuItem19,
+            this.menuItem20});
+            this.menuItem2.Text = "&Edit";
+            // 
             // menuItem12
             // 
             this.menuItem12.Index = 0;
@@ -177,6 +162,60 @@
             this.menuItem15.Index = 3;
             this.menuItem15.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
             this.menuItem15.Text = "Select &All";
+            // 
+            // menuItem19
+            // 
+            this.menuItem19.Index = 4;
+            this.menuItem19.Text = "-";
+            // 
+            // menuItem20
+            // 
+            this.menuItem20.Index = 5;
+            this.menuItem20.Text = "Register File Types";
+            this.menuItem20.Click += new System.EventHandler(this.menuItem20_Click);
+            // 
+            // menuItem21
+            // 
+            this.menuItem21.Index = 2;
+            this.menuItem21.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem22});
+            this.menuItem21.Text = "&Run";
+            // 
+            // menuItem22
+            // 
+            this.menuItem22.Index = 0;
+            this.menuItem22.Shortcut = System.Windows.Forms.Shortcut.F5;
+            this.menuItem22.Text = "&Test Script..";
+            this.menuItem22.Click += new System.EventHandler(this.menuItem22_Click);
+            // 
+            // menuItem3
+            // 
+            this.menuItem3.Index = 3;
+            this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem17,
+            this.menuItem18});
+            this.menuItem3.Text = "&Tabs";
+            // 
+            // menuItem17
+            // 
+            this.menuItem17.Index = 0;
+            this.menuItem17.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
+            this.menuItem17.Text = "New Tab";
+            this.menuItem17.Click += new System.EventHandler(this.menuItem17_Click);
+            // 
+            // menuItem18
+            // 
+            this.menuItem18.Index = 1;
+            this.menuItem18.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
+            this.menuItem18.Text = "Close Tab";
+            this.menuItem18.Click += new System.EventHandler(this.menuItem18_Click);
+            // 
+            // menuItem4
+            // 
+            this.menuItem4.Index = 4;
+            this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItem16});
+            this.menuItem4.Text = "&Help";
             // 
             // menuItem16
             // 
@@ -210,20 +249,6 @@
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "File_32.png");
             // 
-            // menuItem17
-            // 
-            this.menuItem17.Index = 0;
-            this.menuItem17.Shortcut = System.Windows.Forms.Shortcut.CtrlT;
-            this.menuItem17.Text = "New Tab";
-            this.menuItem17.Click += new System.EventHandler(this.menuItem17_Click);
-            // 
-            // menuItem18
-            // 
-            this.menuItem18.Index = 1;
-            this.menuItem18.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
-            this.menuItem18.Text = "Close Tab";
-            this.menuItem18.Click += new System.EventHandler(this.menuItem18_Click);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -239,30 +264,6 @@
             this.fileStatusLabel.Name = "fileStatusLabel";
             this.fileStatusLabel.Size = new System.Drawing.Size(30, 17);
             this.fileStatusLabel.Text = "filler";
-            // 
-            // menuItem19
-            // 
-            this.menuItem19.Index = 4;
-            this.menuItem19.Text = "-";
-            // 
-            // menuItem20
-            // 
-            this.menuItem20.Index = 5;
-            this.menuItem20.Text = "Register File Types";
-            this.menuItem20.Click += new System.EventHandler(this.menuItem20_Click);
-            // 
-            // menuItem21
-            // 
-            this.menuItem21.Index = 2;
-            this.menuItem21.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuItem22});
-            this.menuItem21.Text = "&Run";
-            // 
-            // menuItem22
-            // 
-            this.menuItem22.Index = 0;
-            this.menuItem22.Shortcut = System.Windows.Forms.Shortcut.F5;
-            this.menuItem22.Text = "&Test Script..";
             // 
             // TabbedUI
             // 

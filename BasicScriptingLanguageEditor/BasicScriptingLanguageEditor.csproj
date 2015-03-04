@@ -161,6 +161,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BasicScriptingLanguageDebug\BasicScriptingLanguageDebug.csproj">
+      <Project>{c930e6c3-79a4-4364-9fb5-10a330c48cc3}</Project>
+      <Name>BasicScriptingLanguageDebug</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BasicScriptingLanguage\BasicScriptingLanguage.csproj">
       <Project>{7b9f6092-3400-44b7-b1c4-108c666e56e3}</Project>
       <Name>BasicScriptingLanguage</Name>
