@@ -22,7 +22,10 @@ namespace BasicScriptingLanguageEditor
             Application.SetCompatibleTextRenderingDefault(false);
             if(args.Length > 0)
             {
-                Application.Run(new TabbedUI(args[0]));
+                if (args.Length > 1)
+                    Application.Run(new TabbedUI(args[0]));
+                else
+                    Application.Run(new TabbedUI(args));
             }
             else
                 Application.Run(new TabbedUI());

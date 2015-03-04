@@ -144,24 +144,28 @@
             this.menuItem12.Index = 0;
             this.menuItem12.Shortcut = System.Windows.Forms.Shortcut.CtrlX;
             this.menuItem12.Text = "C&ut";
+            this.menuItem12.Click += new System.EventHandler(this.menuItem12_Click);
             // 
             // menuItem13
             // 
             this.menuItem13.Index = 1;
             this.menuItem13.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
             this.menuItem13.Text = "&Copy";
+            this.menuItem13.Click += new System.EventHandler(this.menuItem13_Click);
             // 
             // menuItem14
             // 
             this.menuItem14.Index = 2;
             this.menuItem14.Shortcut = System.Windows.Forms.Shortcut.CtrlV;
             this.menuItem14.Text = "&Paste";
+            this.menuItem14.Click += new System.EventHandler(this.menuItem14_Click);
             // 
             // menuItem15
             // 
             this.menuItem15.Index = 3;
             this.menuItem15.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
             this.menuItem15.Text = "Select &All";
+            this.menuItem15.Click += new System.EventHandler(this.menuItem15_Click);
             // 
             // menuItem19
             // 

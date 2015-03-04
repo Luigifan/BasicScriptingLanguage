@@ -90,7 +90,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button2.Location = new System.Drawing.Point(443, 261);
+            this.button2.Location = new System.Drawing.Point(457, 261);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(72, 21);
             this.button2.TabIndex = 5;
@@ -102,7 +102,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(363, 261);
+            this.button1.Location = new System.Drawing.Point(377, 261);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(76, 21);
             this.button1.TabIndex = 4;
@@ -117,8 +117,9 @@
             this.inputTextBox.Font = new System.Drawing.Font("Courier New", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inputTextBox.Location = new System.Drawing.Point(11, 262);
             this.inputTextBox.Name = "inputTextBox";
-            this.inputTextBox.Size = new System.Drawing.Size(346, 21);
+            this.inputTextBox.Size = new System.Drawing.Size(360, 21);
             this.inputTextBox.TabIndex = 3;
+            this.inputTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.inputTextBox_KeyDown);
             // 
             // TestScript
             // 

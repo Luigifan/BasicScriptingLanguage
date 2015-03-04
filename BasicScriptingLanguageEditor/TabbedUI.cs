@@ -34,6 +34,14 @@ namespace BasicScriptingLanguageEditor
             fileStatusLabel.Text = "Path: " + fileToOpen;
         }
 
+        public TabbedUI(string[] filesToOpen)
+        {
+            Font = SystemFonts.MessageBoxFont;
+            InitializeComponent();
+
+            OpenMultipleFiles(filesToOpen);
+        }
+
         private void AddTab()
         {
             tabControl1.TabPages.Add("New Document");
@@ -48,6 +56,29 @@ namespace BasicScriptingLanguageEditor
             tabControl1.SelectedIndex = tabControl1.TabPages.Count - 1;
             tabControl1.TabPages[tabControl1.TabPages.Count - 1].Controls.Find("EDITORCONTROL", false)[0].Select();
             tabControl1.TabPages[tabControl1.TabPages.Count - 1].UseVisualStyleBackColor = true;
+        }
+
+        private void OpenMultipleFiles(string[] files)
+        {
+            for(int i = 0; i < files.Count(); i++)
+            {
+                AddTab();
+                try
+                {
+                    EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+                    tabControlsEditor.LoadFile(files[i]);
+                    tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(files[i]);
+                    this.Text = "BasicScriptingLanuage Editor - " + Path.GetFileName(files[i]);
+                    fileStatusLabel.Text = "Path: " + files[i];
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Error loading file: " + ex.Message,
+                        "BasicScriptingLanguage Editor",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
+                }
+            }
         }
 
         //Handlers
@@ -310,6 +341,37 @@ namespace BasicScriptingLanguageEditor
             {
 
             }
+        }
+
+        //Select All
+        private void menuItem15_Click(object sender, EventArgs e)
+        {
+            EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+            tabControlsEditor.fastColoredTextBox1.SelectAll();
+        }
+
+        //Paste
+        private void menuItem14_Click(object sender, EventArgs e)
+        {
+            EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+
+            if(Clipboard.ContainsText(TextDataFormat.Text))
+                tabControlsEditor.fastColoredTextBox1.InsertText(Clipboard.GetData(DataFormats.StringFormat).ToString());
+        }
+
+        //Copy
+        private void menuItem13_Click(object sender, EventArgs e)
+        {
+            EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+
+            tabControlsEditor.fastColoredTextBox1.Copy();
+        }
+
+        //Cut
+        private void menuItem12_Click(object sender, EventArgs e)
+        {
+            EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+            tabControlsEditor.fastColoredTextBox1.Cut();
         }
         //end of class
     }

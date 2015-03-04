@@ -70,12 +70,15 @@ namespace BasicScriptingLanguageEditor
         private void Enterbutton_Click(object sender, EventArgs e)
         {
             InterProc.StandardInput.WriteLine(inputTextBox.Text);
+            inputTextBox.Text = "";
         }
 
         private void TestScript_Load(object sender, EventArgs e)
         {
             Thread t = new Thread(InitializeInterpreter);
             t.Start();
+
+            inputTextBox.Select();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -89,5 +92,15 @@ namespace BasicScriptingLanguageEditor
             e.ChangedRange.ClearStyle(EndOfScriptStyle);
             e.ChangedRange.SetStyle(EndOfScriptStyle, "(END OF SCRIPT)", System.Text.RegularExpressions.RegexOptions.Multiline);
         }
+
+        private void inputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyValue == (int)Keys.Enter)
+            {
+                InterProc.StandardInput.WriteLine(inputTextBox.Text);
+                inputTextBox.Text = "";
+            }
+        }
+
     }
 }
