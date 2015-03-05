@@ -70,7 +70,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>editor_output.ico</ApplicationIcon>
@@ -161,7 +161,6 @@
     <EmbeddedResource Include="TestScript.resx">
       <DependentUpon>TestScript.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="BasicScriptingLanguageEditor_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

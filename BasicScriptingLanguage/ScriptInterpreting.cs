@@ -60,6 +60,15 @@ namespace BasicScriptingLanguage
                     }
                 }
 
+                if (line.StartsWith("if"))
+                {
+                    string ifLines = "";
+                    while ((ifLines = sr.ReadLine()) != "endif")
+                    {
+
+                    }
+                }
+
                 if(IsCommand(line))
                 {
                     if (line.StartsWith("echo"))
@@ -234,6 +243,34 @@ namespace BasicScriptingLanguage
             return false;
         }
 
+        private bool ParseIfStatement(string line, int lineCount)
+        {
+            try
+            {
+                //if diagResult|"Hi"
+                var split = line.Split(new char[] { ' ', '|' }, 3);
+                string varValue = RetrieveVariableValue(split[1]);
+                if (varValue != null)
+                {
+                    if (varValue == split[2])
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    throw new InvalidDataException("Variable doesn't exist!");
+                //endif
+            }
+            catch(InvalidDataException ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("\nERROR: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(ex.Message);
+            }
+            return false;
+        }
+
         /// <summary>
         /// Parse a variable declaration
         /// </summary>
@@ -245,7 +282,7 @@ namespace BasicScriptingLanguage
             {
                 //1       2      3 4
                 //declare result = ""
-                var split = line.Split(new char[] { ' ', '|' }, 4);
+                var split = line.Split(new char[] { ' ', '|' }, 3);
                 if(split[2].Contains('"') == false)
                 {
                     throw new InvalidDataException("Script error at line " + lineCount + ": Variable was not assigned a value");
