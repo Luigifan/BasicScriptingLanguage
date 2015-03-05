@@ -15,7 +15,8 @@ namespace BasicScriptingLanguage
         /// A key value pair that holds basic strings. The key is the name of the variable and the value is the value of the variable.
         /// </summary>
         List<KeyValuePair<string, string>> DeclaredValues = new List<KeyValuePair<string, string>>();
-
+        string[] currentScript;
+        int lineCount;
         /// <summary>
         /// Begin the script handling
         /// </summary>
@@ -24,52 +25,84 @@ namespace BasicScriptingLanguage
         [STAThread]
         public void ReadScript(string file)
         {
-            StreamReader sr = new StreamReader(file);
-            int lineCount = 0; string line;
-            while((line = sr.ReadLine()) != null)
+            currentScript = File.ReadAllLines(file);
+            for (lineCount = 0; lineCount < currentScript.Count(); lineCount++ )
+                InterpretLine(currentScript[lineCount].Trim('\t'), lineCount);
+        }
+
+        bool ifStatementIsFalse = false;
+
+        private void InterpretLine(string line, int lineCount)
+        {
+            if (lineCount == 0)
             {
-                if(lineCount == 0)
+                if (line != "#BasicScriptFile")
+                    throw new InvalidDataException("First line is not '#BasicScriptFile' or is not a BasicScriptFile!");
+                lineCount++;
+                return;
+            }
+
+            if (line == "\n")
+            {
+                lineCount++;
+                return;
+            }
+
+            if (line.StartsWith("#"))
+            {
+                if (line.StartsWith("#metadata"))
                 {
-                    if (line != "#BasicScriptFile")
-                        throw new InvalidDataException("First line is not '#BasicScriptFile' or is not a BasicScriptFile!");
+                    ParseMetadata(line, lineCount);
+                    lineCount++;
+                    return;
                 }
+                else
+                { /*Comment, ignore*/ }
+            }
 
-                if (line == "\n")
-                    break;
+            if (line.StartsWith("declare"))
+            {
+                ParseDeclareVariable(line, lineCount);
+                lineCount++;
+                return;
+            }
 
-                if(line.StartsWith("#"))
+            if (StartsWithVariable(line)) //useful for checking for variable assining/updating variables
+            {
+                if (!line.StartsWith("if"))
                 {
-                    if (line.StartsWith("#metadata"))
-                    {
-                        ParseMetadata(line, lineCount);
-                    }
-                    else
-                    { /*Comment, ignore*/ }
-                }
-
-                if(line.StartsWith("declare"))
-                {
-                    ParseDeclareVariable(line, lineCount);   
-                }
-
-                if(StartsWithVariable(line)) //useful for checking for variable assining/updating variables
-                {
-                    if(IsAssigningVariable(line))
+                    if (IsAssigningVariable(line))
                     {
                         AssignVariable(line, lineCount);
+                        lineCount++;
+                        return;
                     }
                 }
+            }
 
-                if (line.StartsWith("if"))
+            if (line.StartsWith("endif"))
+            { ifStatementIsFalse = false; lineCount++; return; }
+
+            if (line.StartsWith("if"))
+            {
+                bool ifStatementEvaluate = ParseIfStatement(line, lineCount);
+
+                if (ifStatementEvaluate)
                 {
-                    string ifLines = "";
-                    while ((ifLines = sr.ReadLine()) != "endif")
-                    {
-
-                    }
+                    lineCount++;
+                    return;
                 }
+                else
+                {
+                    ifStatementIsFalse = true;
+                    lineCount++;
+                    return;
+                }
+            }
 
-                if(IsCommand(line))
+            if (ifStatementIsFalse == false)
+            {
+                if (IsCommand(line))
                 {
                     if (line.StartsWith("echo"))
                         BasicOutput.Echo(line, lineCount);
@@ -79,11 +112,12 @@ namespace BasicScriptingLanguage
                         ProcessExecutor.StartProcess(line, lineCount);
                     else if (line.StartsWith("wait"))
                         BasicOutput.Wait(line, lineCount);
+
+                    lineCount++;
+                    return;
                 }
-
-                lineCount++;
-
             }
+            lineCount++;
         }
 
         private void ParseMetadata(string line, int lineCount)
@@ -252,7 +286,7 @@ namespace BasicScriptingLanguage
                 string varValue = RetrieveVariableValue(split[1]);
                 if (varValue != null)
                 {
-                    if (varValue == split[2])
+                    if (varValue.Equals(split[2].Trim('"')))
                         return true;
                     else
                         return false;
