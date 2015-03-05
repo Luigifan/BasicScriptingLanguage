@@ -460,6 +460,13 @@ namespace BasicScriptingLanguageEditor
                         page.Dispose();
             }
         }
+
+        //About
+        private void menuItem16_Click(object sender, EventArgs e)
+        {
+            AboutBox ab = new AboutBox();
+            ab.ShowDialog();
+        }
         //end of class
         #endregion
     }

@@ -225,6 +225,7 @@
             // 
             this.menuItem16.Index = 0;
             this.menuItem16.Text = "About";
+            this.menuItem16.Click += new System.EventHandler(this.menuItem16_Click);
             // 
             // toolStrip1
             // 
@@ -243,7 +244,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(608, 363);
+            this.tabControl1.Size = new System.Drawing.Size(806, 606);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -257,9 +258,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 341);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 584);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(608, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(806, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -273,13 +274,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 363);
+            this.ClientSize = new System.Drawing.Size(806, 606);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu1;
             this.Name = "TabbedUI";
             this.Text = "BasicScriptingLanguage Editor - New Document";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TabbedUI_FormClosing);
             this.Load += new System.EventHandler(this.TabbedUI_Load);
             this.statusStrip1.ResumeLayout(false);
