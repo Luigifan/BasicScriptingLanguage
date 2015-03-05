@@ -281,6 +281,7 @@
             this.Name = "TabbedUI";
             this.Text = "BasicScriptingLanguage Editor - New Document";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TabbedUI_FormClosing);
+            this.Load += new System.EventHandler(this.TabbedUI_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);

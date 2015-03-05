@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BasicScriptingLanguageEditor.Internal;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +14,8 @@ namespace BasicScriptingLanguageEditor
 {
     public partial class TabbedUI : Form
     {
+        SettingsManager MainSettingsManager = new SettingsManager(Environment.CurrentDirectory + @"\config.ini");
+
         public TabbedUI()
         {
             Font = SystemFonts.MessageBoxFont;
@@ -81,77 +84,29 @@ namespace BasicScriptingLanguageEditor
             }
         }
 
-        //Handlers
-
-        //Add tab
-        private void menuItem17_Click(object sender, EventArgs e)
-        {
-            AddTab();
-        }
-
-        //close tab
-        private void menuItem18_Click(object sender, EventArgs e)
-        {
-            if (tabControl1.SelectedIndex != -1)
-            {
-                int newSelected = tabControl1.SelectedIndex - 1;
-
-                EditorControl editor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", false)[0];
-                bool isCancelling = false;
-
-                if(editor.HasChanges)
-                {
-                    DialogResult dr = MessageBox.Show(Path.GetFileName(editor.CurrentFile) + " has unsaved changes, are you sure you wish to close this file?", 
-                        "BasicScriptingLanguage Editor", 
-                        MessageBoxButtons.YesNoCancel, 
-                        MessageBoxIcon.Information);
-                    if (dr == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        if (editor.CurrentFile == "New Document")
-                        {
-                            SaveAs();
-                        }
-                        else
-                        {
-                            if (File.Exists(editor.CurrentFile))
-                                editor.SaveFile(editor.CurrentFile);
-                        }
-                    }
-                    else if (dr == System.Windows.Forms.DialogResult.No)
-                    { isCancelling = true; }
-                    else if (dr == System.Windows.Forms.DialogResult.Cancel)
-                        isCancelling = true; ;
-                }
-
-                if (!isCancelling)
-                {
-                    tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
-                    try
-                    {
-                        tabControl1.SelectedIndex = newSelected;
-                    }
-                    catch
-                    { /*nothing*/ }
-                }
-            }
-        }
-
-        private void SaveAs()
+        private DialogResult SaveAs()
         {
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
 
             SaveFileDialog sf = new SaveFileDialog();
             sf.Filter = "BasicScriptFile|*.bsl|Other (Everything)|*.*";
             DialogResult dr = sf.ShowDialog();
-            if(dr == System.Windows.Forms.DialogResult.OK)
+            if (dr == System.Windows.Forms.DialogResult.OK)
             {
-                if(tabControlsEditor.SaveFile(sf.FileName) == 0)
+                if (tabControlsEditor.SaveFile(sf.FileName) == 0)
                 {
                     fileStatusLabel.Text = string.Format("Saved to {0} successfully!", Path.GetFileName(sf.FileName));
                     tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(sf.FileName);
                     this.Text = "BasicScriptingLanuage Editor - " + Path.GetFileName(sf.FileName);
+                    return DialogResult.OK;
                 }
+                else
+                    return System.Windows.Forms.DialogResult.Cancel;
             }
+            else if (dr == System.Windows.Forms.DialogResult.Cancel)
+                return DialogResult.Cancel;
+
+            return DialogResult.Cancel;
         }
 
         private void Save()
@@ -159,7 +114,7 @@ namespace BasicScriptingLanguageEditor
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             if (File.Exists(tabControlsEditor.CurrentFile))
             {
-                if(tabControlsEditor.SaveFile(tabControlsEditor.CurrentFile) == 0)
+                if (tabControlsEditor.SaveFile(tabControlsEditor.CurrentFile) == 0)
                 {
                     fileStatusLabel.Text = string.Format("Saved to {0} successfully!", Path.GetFileName(tabControlsEditor.CurrentFile));
                     tabControl1.TabPages[tabControl1.SelectedIndex].Text = tabControl1.TabPages[tabControl1.SelectedIndex].Text.Trim('*');
@@ -183,6 +138,68 @@ namespace BasicScriptingLanguageEditor
                 castAsParent.Parent.Text = castAsParent.Parent.Text.Trim('*');
         }
 
+        #region Event handlers..
+
+        //Add tab
+        private void menuItem17_Click(object sender, EventArgs e)
+        {
+            AddTab();
+        }
+
+        //close tab
+        private void menuItem18_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex != -1)
+            {
+                int newSelected = tabControl1.SelectedIndex - 1;
+
+                if (newSelected == -1)
+                    newSelected = 0;
+
+                EditorControl editor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", false)[0];
+                bool isCancelling = false;
+
+                if(editor.HasChanges)
+                {
+                    DialogResult dr = MessageBox.Show(Path.GetFileName(editor.CurrentFile) + " has unsaved changes, do you wish to save them before exiting?", 
+                        "BasicScriptingLanguage Editor", 
+                        MessageBoxButtons.YesNoCancel, 
+                        MessageBoxIcon.Information);
+                    if (dr == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        if (editor.CurrentFile == "New Document")
+                        {
+                            if (SaveAs() == System.Windows.Forms.DialogResult.Cancel)
+                                isCancelling = true;
+                            else
+                                isCancelling = false;
+                        }
+                        else
+                        {
+                            if (File.Exists(editor.CurrentFile))
+                                editor.SaveFile(editor.CurrentFile);
+                        }
+                    }
+                    else if (dr == System.Windows.Forms.DialogResult.No)
+                    { isCancelling = false; }
+                    else if (dr == System.Windows.Forms.DialogResult.Cancel)
+                        isCancelling = true; ;
+                }
+
+                if (!isCancelling)
+                {
+                    tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
+                    try
+                    {
+                        tabControl1.SelectedIndex = newSelected;
+                    }
+                    catch
+                    { /*nothing*/ }
+                }
+            }
+        }
+
+        
         //Openfile
         private void menuItem7_Click(object sender, EventArgs e)
         {
@@ -197,11 +214,25 @@ namespace BasicScriptingLanguageEditor
                     Control itemm = (Control)item;
                     if(itemm.Name == "EDITORCONTROL")
                     {
-                        EditorControl toOpenFileIn = (EditorControl)itemm;
-                        toOpenFileIn.LoadFile(of.FileName);
-                        tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(of.FileName);
-                        this.Text = "BasicScriptingLanuage Editor - " + Path.GetFileName(of.FileName);
-                        fileStatusLabel.Text = "Path: " + of.FileName;
+                        EditorControl castControlAsEditor = (EditorControl)itemm;
+
+                        if (castControlAsEditor.CurrentFile == "New Document" && castControlAsEditor.HasChanges != true)
+                        {
+                            EditorControl toOpenFileIn = (EditorControl)itemm;
+                            toOpenFileIn.LoadFile(of.FileName);
+                            tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(of.FileName);
+                            this.Text = "BasicScriptingLanguage Editor - " + Path.GetFileName(of.FileName);
+                            fileStatusLabel.Text = "Path: " + of.FileName;
+                        }
+                        else if(castControlAsEditor.HasChanges == true | castControlAsEditor.CurrentFile != "New Document")
+                        {
+                            AddTab();
+                            EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+                            tabControlsEditor.LoadFile(of.FileName);
+                            tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(of.FileName);
+                            this.Text = "BasicScriptingLanguage Editor - " + Path.GetFileName(of.FileName);
+                            fileStatusLabel.Text = "Path: " + of.FileName;
+                        }
                     }
                 }
             }
@@ -262,14 +293,25 @@ namespace BasicScriptingLanguageEditor
                                     //save
                                     if (castAsEditor.CurrentFile == "New Document")
                                     {
-                                        SaveAs();
+                                        if (SaveAs() == DialogResult.Cancel)
+                                            e.Cancel = true;
+                                        else
+                                            e.Cancel = false;
                                     }
                                     else
                                     {
                                         if (File.Exists(castAsEditor.CurrentFile))
+                                        {
                                             castAsEditor.SaveFile(castAsEditor.CurrentFile);
+                                            e.Cancel = false;
+                                        }
+                                        else
+                                            if (SaveAs() == DialogResult.Cancel)
+                                                e.Cancel = true;
+                                            else
+                                                e.Cancel = false;
                                     }
-                                    e.Cancel = false;
+                                    
                                 }
                                 else if (dr == System.Windows.Forms.DialogResult.No)
                                 {
@@ -288,6 +330,28 @@ namespace BasicScriptingLanguageEditor
                     index++;
                 }
             }
+            int index2 = 0;
+            List<string> FilesToBeReopened = new List<string>();
+            foreach(var page in tabControl1.TabPages)
+            {
+                tabControl1.SelectedIndex = index2;
+                EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+
+                if (tabControlsEditor.CurrentFile != "New Document")
+                    FilesToBeReopened.Add(tabControlsEditor.CurrentFile);
+
+                index2++;
+            }
+            string built = "";
+            for(int i = 0; i < FilesToBeReopened.Count(); i++)
+            {
+                if(i == (FilesToBeReopened.Count() - 1))
+                    built += "\"" + FilesToBeReopened[i] + "\"";
+                else
+                    built += "\"" + FilesToBeReopened[i] + "\",";
+            }
+            if (built != "")
+                MainSettingsManager.MainIniFile.WriteValue("Settings", "AlreadyOpenFiles", built);
             //
         }
 
@@ -339,7 +403,19 @@ namespace BasicScriptingLanguageEditor
             }
             else
             {
-
+                DialogResult dr = MessageBox.Show("The current file must be saved to the disk before testing the script. Continue with saving?", 
+                    "BasicScriptingLanguage Editor",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+                if(dr == System.Windows.Forms.DialogResult.Yes)
+                {
+                    SaveAs();
+                    tabControlsEditor.SaveFile(tabControlsEditor.CurrentFile);
+                    fileStatusLabel.Text = string.Format("Saved to {0} successfully!", Path.GetFileName(tabControlsEditor.CurrentFile));
+                    tabControl1.TabPages[tabControl1.SelectedIndex].Text = tabControl1.TabPages[tabControl1.SelectedIndex].Text.Trim('*');
+                    ts = new TestScript(tabControlsEditor.CurrentFile);
+                    ts.ShowDialog();
+                }
             }
         }
 
@@ -373,6 +449,18 @@ namespace BasicScriptingLanguageEditor
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             tabControlsEditor.fastColoredTextBox1.Cut();
         }
+
+        private void TabbedUI_Load(object sender, EventArgs e)
+        {
+            if(MainSettingsManager.LoadRecentFilesList() != 1)
+            {
+                OpenMultipleFiles(MainSettingsManager.AlreadyOpenFiles.ToArray<string>());
+                foreach (TabPage page in tabControl1.TabPages)
+                    if (page.Text == "New Document")
+                        page.Dispose();
+            }
+        }
         //end of class
+        #endregion
     }
 }

@@ -86,9 +86,9 @@ namespace BasicScriptingLanguageEditor
             InterProc.StandardInput.WriteLine();
         }
 
+        Style EndOfScriptStyle = new TextStyle(Brushes.Red, Brushes.Transparent, FontStyle.Regular);
         private void fastColoredTextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Style EndOfScriptStyle = new TextStyle(Brushes.Red, Brushes.Transparent, FontStyle.Regular);
             e.ChangedRange.ClearStyle(EndOfScriptStyle);
             e.ChangedRange.SetStyle(EndOfScriptStyle, "(END OF SCRIPT)", System.Text.RegularExpressions.RegexOptions.Multiline);
         }
