@@ -260,9 +260,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 518);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 413);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(951, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(637, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -276,7 +276,7 @@
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Image = global::BasicScriptingLanguageEditor.Properties.Resources.backdrop;
-            this.pictureBox1.Location = new System.Drawing.Point(695, 268);
+            this.pictureBox1.Location = new System.Drawing.Point(381, 163);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(256, 256);
             this.pictureBox1.TabIndex = 3;
@@ -286,13 +286,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(951, 540);
+            this.ClientSize = new System.Drawing.Size(637, 435);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu1;
+            this.MinimumSize = new System.Drawing.Size(653, 494);
             this.Name = "TabbedUI";
             this.Text = "BasicScriptingLanguage Editor - New Document";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

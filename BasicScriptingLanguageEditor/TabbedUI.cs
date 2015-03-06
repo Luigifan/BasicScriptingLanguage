@@ -88,6 +88,9 @@ namespace BasicScriptingLanguageEditor
 
         private DialogResult SaveAs()
         {
+            if (tabControl1.SelectedIndex == -1)
+                return DialogResult.Cancel;
+
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
 
             SaveFileDialog sf = new SaveFileDialog();
@@ -113,6 +116,9 @@ namespace BasicScriptingLanguageEditor
 
         private void Save()
         {
+            if (tabControl1.SelectedIndex == -1)
+                return;
+
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             if (File.Exists(tabControlsEditor.CurrentFile))
             {
@@ -391,6 +397,12 @@ namespace BasicScriptingLanguageEditor
         //Test script
         private void menuItem22_Click(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please open a file.", "BasicScriptingLanguage Editor", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             TestScript ts;
 
@@ -427,6 +439,8 @@ namespace BasicScriptingLanguageEditor
         //Select All
         private void menuItem15_Click(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedIndex == -1)
+                return;
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             tabControlsEditor.fastColoredTextBox1.SelectAll();
         }
@@ -434,6 +448,8 @@ namespace BasicScriptingLanguageEditor
         //Paste
         private void menuItem14_Click(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedIndex == -1)
+                return;
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
 
             if(Clipboard.ContainsText(TextDataFormat.Text))
@@ -443,6 +459,8 @@ namespace BasicScriptingLanguageEditor
         //Copy
         private void menuItem13_Click(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedIndex == -1)
+                return;
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
 
             tabControlsEditor.fastColoredTextBox1.Copy();
@@ -451,6 +469,8 @@ namespace BasicScriptingLanguageEditor
         //Cut
         private void menuItem12_Click(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedIndex == -1)
+                return;
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             tabControlsEditor.fastColoredTextBox1.Cut();
         }

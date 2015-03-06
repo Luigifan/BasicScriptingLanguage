@@ -1,11 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicScriptingLanguage", "BasicScriptingLanguage\BasicScriptingLanguage.csproj", "{7B9F6092-3400-44B7-B1C4-108C666E56E3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicScriptingLanguageEditor", "BasicScriptingLanguageEditor\BasicScriptingLanguageEditor.csproj", "{92F546AC-1EB2-4138-8296-69530C8C17C6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C930E6C3-79A4-4364-9FB5-10A330C48CC3} = {C930E6C3-79A4-4364-9FB5-10A330C48CC3}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicTestingApplication", "BasicTestingApplication\BasicTestingApplication.csproj", "{2CECCC2F-D8FB-4AB0-ADA1-B345BDA0C0F1}"
 EndProject
