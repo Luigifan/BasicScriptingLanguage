@@ -27,7 +27,10 @@ namespace BasicScriptingLanguage
         {
             currentScript = File.ReadAllLines(file);
             for (lineCount = 0; lineCount < currentScript.Count(); lineCount++ )
-                InterpretLine(currentScript[lineCount].Trim('\t'), lineCount);
+            {
+                string actualLine = Regex.Replace(currentScript[lineCount], " {2,}", "\t");
+                InterpretLine(actualLine.Trim('\t'), lineCount);
+            }
         }
 
         bool ifStatementIsFalse = false;
