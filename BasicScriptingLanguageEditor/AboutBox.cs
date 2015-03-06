@@ -24,7 +24,7 @@ namespace BasicScriptingLanguageEditor
         {
             bslEditorVerLabel.Text = String.Format("v{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
 
-            FileVersionInfo dllInfo = FileVersionInfo.GetVersionInfo(Environment.CurrentDirectory + @"\BasicScriptingLanguage.dll");
+            FileVersionInfo dllInfo = FileVersionInfo.GetVersionInfo(Program.ExecutableLocation + @"\BasicScriptingLanguage.dll");
 
             bslDllVerLabel.Text = dllInfo.ProductVersion;
         }

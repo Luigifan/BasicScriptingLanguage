@@ -14,7 +14,7 @@ namespace BasicScriptingLanguageEditor
 {
     public partial class TabbedUI : Form
     {
-        SettingsManager MainSettingsManager = new SettingsManager(Environment.CurrentDirectory + @"\config.ini");
+        SettingsManager MainSettingsManager = new SettingsManager(Program.ExecutableLocation + @"\config.ini");
 
         public TabbedUI()
         {

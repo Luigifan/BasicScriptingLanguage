@@ -12,6 +12,8 @@ namespace BasicScriptingLanguageEditor
 {
     static class Program
     {
+        public static string ExecutableLocation = AppDomain.CurrentDomain.BaseDirectory;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
