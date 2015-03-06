@@ -63,6 +63,16 @@ namespace BasicScriptingLanguageEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap backdrop {
+            get {
+                object obj = ResourceManager.GetObject("backdrop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Dll_512 {
             get {
                 object obj = ResourceManager.GetObject("Dll-512", resourceCulture);

@@ -192,6 +192,7 @@
   <ItemGroup>
     <Content Include="editor_output.ico" />
     <Content Include="File_512.png" />
+    <None Include="Resources\backdrop.png" />
     <None Include="Resources\Dll-512.png" />
     <None Include="Resources\Editor-Large.png" />
     <None Include="Resources\Format_BSL.ico" />

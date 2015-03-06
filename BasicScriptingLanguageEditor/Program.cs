@@ -60,7 +60,9 @@ namespace BasicScriptingLanguageEditor
             /***********************************/
             /**** Key1: Create ".abc" entry ****/
             /***********************************/
+            
             Microsoft.Win32.RegistryKey key1 = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software", true);
+
 
             key1.CreateSubKey("Classes");
             key1 = key1.OpenSubKey("Classes", true);
@@ -84,7 +86,7 @@ namespace BasicScriptingLanguageEditor
 
             key2.CreateSubKey("DefaultIcon");
             key2 = key2.OpenSubKey("DefaultIcon", true);
-            key2.SetValue("", "\"" + iconPath + "\""); // Set default key value
+            key2.SetValue("", "" + iconPath + ""); // Set default key value
 
             key2.Close();
 
@@ -98,18 +100,44 @@ namespace BasicScriptingLanguageEditor
 
             key3.CreateSubKey("BSLFile");
             key3 = key3.OpenSubKey("BSLFile", true);
+            key3.SetValue("", "BasicScriptingLanguage Source File");
 
             key3.CreateSubKey("shell");
             key3 = key3.OpenSubKey("shell", true);
+            key3.SetValue("", "open");
 
             key3.CreateSubKey("open");
             key3 = key3.OpenSubKey("open", true);
+
+            key3.SetValue("", "Open with BasicScriptingLanguage Editor");
 
             key3.CreateSubKey("command");
             key3 = key3.OpenSubKey("command", true);
             key3.SetValue("", "\"" + Assembly.GetExecutingAssembly().Location + "\"" + " \"%1\""); // Set default key value
 
             key3.Close();
+            ////HKEY_CURRENT_USER\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\EXPLORER\FILEEXTS\-name of your extension-
+            Microsoft.Win32.RegistryKey key4 = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software", true);
+
+            key4.CreateSubKey("MICROSOFT");
+            key4 = key4.OpenSubKey("MICROSOFT", true);
+
+            key4.CreateSubKey("windows");
+            key4 = key4.OpenSubKey("windows", true);
+
+            key4.CreateSubKey("currentversion");
+            key4 = key4.OpenSubKey("currentversion", true);
+
+            key4.CreateSubKey("explorer");
+            key4 = key4.OpenSubKey("explorer", true);
+
+            key4.CreateSubKey("fileexts");
+            key4 = key4.OpenSubKey("fileexts", true);
+
+            key4.CreateSubKey(".bsl");
+            key4 = key4.OpenSubKey(".bsl", true);
+            key4.SetValue("", "BSLFile");
+            key4.Close();
         }
 
     }

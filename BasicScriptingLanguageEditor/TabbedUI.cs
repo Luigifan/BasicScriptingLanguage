@@ -47,6 +47,8 @@ namespace BasicScriptingLanguageEditor
 
         private void AddTab()
         {
+            tabControl1.Visible = true;
+
             tabControl1.TabPages.Add("New Document");
             EditorControl newEditorControl = new EditorControl();
             newEditorControl.Dock = DockStyle.Fill;
@@ -196,6 +198,9 @@ namespace BasicScriptingLanguageEditor
                     catch
                     { /*nothing*/ }
                 }
+
+                if (tabControl1.TabPages.Count == 0)
+                    tabControl1.Visible = false;
             }
         }
 
@@ -452,6 +457,11 @@ namespace BasicScriptingLanguageEditor
 
         private void TabbedUI_Load(object sender, EventArgs e)
         {
+            pictureBox1.Location = new Point(this.Width - (pictureBox1.Size.Width - (pictureBox1.Size.Width/2/2/2)), this.Height - pictureBox1.Size.Height);
+
+            tabControl1.Visible = true;
+            tabControl1.Dock = DockStyle.Fill;
+
             if(MainSettingsManager.LoadRecentFilesList() != 1)
             {
                 OpenMultipleFiles(MainSettingsManager.AlreadyOpenFiles.ToArray<string>());

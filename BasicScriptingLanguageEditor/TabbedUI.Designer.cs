@@ -58,7 +58,9 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.fileStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // mainMenu1
@@ -239,13 +241,13 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.ImageList = this.imageList1;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Location = new System.Drawing.Point(103, 102);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(806, 606);
+            this.tabControl1.Size = new System.Drawing.Size(347, 213);
             this.tabControl1.TabIndex = 1;
+            this.tabControl1.Visible = false;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // imageList1
@@ -258,9 +260,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileStatusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 584);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 518);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(806, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(951, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -270,13 +272,24 @@
             this.fileStatusLabel.Size = new System.Drawing.Size(30, 17);
             this.fileStatusLabel.Text = "filler";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Image = global::BasicScriptingLanguageEditor.Properties.Resources.backdrop;
+            this.pictureBox1.Location = new System.Drawing.Point(695, 268);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(256, 256);
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
             // TabbedUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 606);
+            this.ClientSize = new System.Drawing.Size(951, 540);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Menu = this.mainMenu1;
@@ -287,6 +300,7 @@
             this.Load += new System.EventHandler(this.TabbedUI_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,5 +336,6 @@
         private System.Windows.Forms.MenuItem menuItem20;
         private System.Windows.Forms.MenuItem menuItem21;
         private System.Windows.Forms.MenuItem menuItem22;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
