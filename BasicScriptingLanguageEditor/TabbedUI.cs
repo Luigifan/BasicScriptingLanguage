@@ -273,9 +273,15 @@ namespace BasicScriptingLanguageEditor
             {
                 EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
                 if (tabControlsEditor.CurrentFile != "New Document")
+                {
                     fileStatusLabel.Text = "Path: " + tabControlsEditor.CurrentFile;
+                    this.Text = "BasicScriptingLanguage Editor - " + Path.GetFileName(tabControlsEditor.CurrentFile);
+                }
                 else
+                { 
                     fileStatusLabel.Text = "";
+                    this.Text = "BasicScriptingLanguage Editor";
+                }
             }
         }
 
