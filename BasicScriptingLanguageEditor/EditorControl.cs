@@ -17,6 +17,7 @@ namespace BasicScriptingLanguageEditor
     {
         //Styles
         Style FirstLineStyle = new TextStyle(Brushes.Purple, Brushes.Plum, FontStyle.Bold | FontStyle.Italic);
+        Style MetadataStyle = new TextStyle(Brushes.Purple, Brushes.Transparent, FontStyle.Bold | FontStyle.Underline);
         Style CommentStyle = new TextStyle(Brushes.Purple, null, FontStyle.Regular);
         Style KeywordStyle = new TextStyle(Brushes.Blue, null, FontStyle.Bold);
         Style StringStyle = new TextStyle(Brushes.Maroon, null, FontStyle.Italic);
@@ -86,32 +87,36 @@ namespace BasicScriptingLanguageEditor
         {
             if (DuringLoadOrSave == false)
             {
-
                 if (Text.Contains('*') != true)
                     HasChanges = true;
                 else
                     HasChanges = false;
             }
-                if (String.IsNullOrEmpty(fastColoredTextBox1.Text))
-                {
-                    HasChanges = false;
-                }
 
-                //First line
-                e.ChangedRange.ClearStyle(FirstLineStyle);
-                e.ChangedRange.SetStyle(FirstLineStyle, @"#BasicScriptFile", RegexOptions.Multiline);
+            if (String.IsNullOrEmpty(fastColoredTextBox1.Text))
+            {
+                HasChanges = false;
+            }
 
-                //Handles comments
-                e.ChangedRange.ClearStyle(CommentStyle);
-                e.ChangedRange.SetStyle(CommentStyle, @"#.*$", RegexOptions.Multiline);
+            //First line
+            e.ChangedRange.ClearStyle(FirstLineStyle);
+            e.ChangedRange.SetStyle(FirstLineStyle, @"#BasicScriptFile", RegexOptions.Multiline);
+                
+            //metadata
+            e.ChangedRange.ClearStyle(MetadataStyle);
+            e.ChangedRange.SetStyle(MetadataStyle, @"#metadata .*$", RegexOptions.Multiline);
 
-                //Strings
-                e.ChangedRange.ClearStyle(StringStyle);
-                e.ChangedRange.SetStyle(StringStyle, "\".*?\"", RegexOptions.Multiline);
+            //Handles comments
+            e.ChangedRange.ClearStyle(CommentStyle);
+            e.ChangedRange.SetStyle(CommentStyle, @"#.*$", RegexOptions.Multiline);
 
-                //Keywords like declare, if, etc
-                e.ChangedRange.ClearStyle(KeywordStyle);
-                e.ChangedRange.SetStyle(KeywordStyle, @"\b(declare|if|else|elseif|exit|return|wait)", RegexOptions.Multiline);
+            //Strings
+            e.ChangedRange.ClearStyle(StringStyle);
+            e.ChangedRange.SetStyle(StringStyle, "\".*?\"", RegexOptions.Multiline);
+
+            //Keywords like declare, if, etc
+            e.ChangedRange.ClearStyle(KeywordStyle);
+            e.ChangedRange.SetStyle(KeywordStyle, @"\b(declare|if|else|elseif|exit|return|wait|endif)", RegexOptions.Multiline);
         }
 
     }

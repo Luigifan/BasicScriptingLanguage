@@ -283,6 +283,11 @@ namespace BasicScriptingLanguageEditor
                     this.Text = "BasicScriptingLanguage Editor";
                 }
             }
+            else
+            {
+                fileStatusLabel.Text = "";
+                this.Text = "BasicScriptingLanguage Editor";
+            }
         }
 
         private bool cancelling = false;
