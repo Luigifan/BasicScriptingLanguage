@@ -33,8 +33,20 @@ namespace BasicScriptingLanguageEditor
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             tabControlsEditor.LoadFile(fileToOpen);
             tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(fileToOpen);
-            this.Text = "BasicScriptingLanuage Editor - " + Path.GetFileName(fileToOpen);
+            this.Text = "BasicScriptingLanguage Editor - " + Path.GetFileName(fileToOpen);
             fileStatusLabel.Text = "Path: " + fileToOpen;
+        }
+
+        public void OpenFile(string fileToOpen)
+        {
+            if (!FileIsAlreadyOpen(fileToOpen))
+            {
+                EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+                tabControlsEditor.LoadFile(fileToOpen);
+                tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(fileToOpen);
+                this.Text = "BasicScriptingLanguage Editor - " + Path.GetFileName(fileToOpen);
+                fileStatusLabel.Text = "Path: " + fileToOpen;
+            }
         }
 
         public TabbedUI(string[] filesToOpen)
@@ -44,6 +56,7 @@ namespace BasicScriptingLanguageEditor
 
             OpenMultipleFiles(filesToOpen);
         }
+
 
         private void AddTab()
         {
@@ -63,25 +76,40 @@ namespace BasicScriptingLanguageEditor
             tabControl1.TabPages[tabControl1.TabPages.Count - 1].UseVisualStyleBackColor = true;
         }
 
-        private void OpenMultipleFiles(string[] files)
+        private bool FileIsAlreadyOpen(string filePath)
+        {
+            bool fileFound = false;
+            for(int i = 0; i < tabControl1.TabPages.Count; i++)
+            {
+                EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[i].Controls.Find("EDITORCONTROL", true)[0];
+                if (tabControlsEditor.CurrentFile == filePath)
+                    return true;
+            }
+            return fileFound;
+        }
+
+        public void OpenMultipleFiles(string[] files)
         {
             for(int i = 0; i < files.Count(); i++)
             {
-                AddTab();
-                try
+                if (!FileIsAlreadyOpen(files[i]))
                 {
-                    EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
-                    tabControlsEditor.LoadFile(files[i]);
-                    tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(files[i]);
-                    this.Text = "BasicScriptingLanuage Editor - " + Path.GetFileName(files[i]);
-                    fileStatusLabel.Text = "Path: " + files[i];
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Error loading file: " + ex.Message,
-                        "BasicScriptingLanguage Editor",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
+                    AddTab();
+                    try
+                    {
+                        EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
+                        tabControlsEditor.LoadFile(files[i]);
+                        tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(files[i]);
+                        this.Text = "BasicScriptingLanguage Editor - " + Path.GetFileName(files[i]);
+                        fileStatusLabel.Text = "Path: " + files[i];
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error loading file: " + ex.Message,
+                            "BasicScriptingLanguage Editor",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        tabControl1.TabPages.RemoveAt(tabControl1.SelectedIndex);
+                    }
                 }
             }
         }
@@ -102,7 +130,7 @@ namespace BasicScriptingLanguageEditor
                 {
                     fileStatusLabel.Text = string.Format("Saved to {0} successfully!", Path.GetFileName(sf.FileName));
                     tabControl1.TabPages[tabControl1.SelectedIndex].Text = Path.GetFileName(sf.FileName);
-                    this.Text = "BasicScriptingLanuage Editor - " + Path.GetFileName(sf.FileName);
+                    this.Text = "BasicScriptingLanguage Editor - " + Path.GetFileName(sf.FileName);
                     return DialogResult.OK;
                 }
                 else
@@ -380,6 +408,8 @@ namespace BasicScriptingLanguageEditor
         //New
         private void menuItem5_Click(object sender, EventArgs e)
         {
+            if (tabControl1.SelectedIndex == -1)
+                AddTab();
             EditorControl tabControlsEditor = (EditorControl)tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Find("EDITORCONTROL", true)[0];
             if (tabControlsEditor.HasChanges)
                 AddTab();
@@ -387,7 +417,7 @@ namespace BasicScriptingLanguageEditor
             { 
                 tabControlsEditor.NewFile();
                 tabControl1.TabPages[tabControl1.SelectedIndex].Text = "New Document";
-                this.Text = "BasicScriptingLanuage Editor - " + "New Document";
+                this.Text = "BasicScriptingLanguage Editor - " + "New Document";
                 fileStatusLabel.Text = "";
             }
         }

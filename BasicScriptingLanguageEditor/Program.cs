@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,20 +19,48 @@ namespace BasicScriptingLanguageEditor
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static void Main()
         {
+            Application.EnableVisualStyles();
+            string[] args = Environment.GetCommandLineArgs();
+            SingleInstanceController controller = new SingleInstanceController();
+            controller.Run(args);
+        }
+        /*static void Main(string[] args)
+        {
+            if (IsApplicationRunning())
+            {
+                MessageBox.Show("App already running");
+                return;
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if(args.Length > 0)
             {
-                if (args.Length > 1)
+                if (args.Length == 1)
                     Application.Run(new TabbedUI(args[0]));
                 else
                     Application.Run(new TabbedUI(args));
             }
             else
                 Application.Run(new TabbedUI());
+        }*/
+
+        private static bool IsApplicationRunning()
+        {
+            using (Mutex mutex = new Mutex(false, "Global\\" + appGuid))
+            {
+                if (!mutex.WaitOne(0, false))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
         }
+
+        private static string appGuid = "4687d67a-10e9-47c8-91f4-16cd53e03a40";
 
         public static void RegisterFileAssociations()
         {
@@ -52,7 +81,7 @@ namespace BasicScriptingLanguageEditor
             }
             else
                 MessageBox.Show("File associations already registered.", "BasicScriptingLanguage Editor");*/
-            string path = Environment.CurrentDirectory + @"\format.ico";
+            string path = ExecutableLocation + "format.ico";
             Create_abc_FileAssociation(path);
             MessageBox.Show("Attempted file assosciation successfully", "BasicScriptingLanguage Editor");
         }
