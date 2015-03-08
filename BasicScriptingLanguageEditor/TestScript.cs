@@ -87,10 +87,14 @@ namespace BasicScriptingLanguageEditor
         }
 
         Style EndOfScriptStyle = new TextStyle(Brushes.Red, Brushes.Transparent, FontStyle.Regular);
+        Style ErrorStyle = new TextStyle(Brushes.White, Brushes.DarkRed, FontStyle.Bold);
         private void fastColoredTextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
             e.ChangedRange.ClearStyle(EndOfScriptStyle);
             e.ChangedRange.SetStyle(EndOfScriptStyle, "(END OF SCRIPT)", System.Text.RegularExpressions.RegexOptions.Multiline);
+
+            e.ChangedRange.ClearStyle(ErrorStyle);
+            e.ChangedRange.SetStyle(ErrorStyle, "(ERROR EXECUTING SCRIPT)", System.Text.RegularExpressions.RegexOptions.Multiline);
         }
 
         private void inputTextBox_KeyDown(object sender, KeyEventArgs e)

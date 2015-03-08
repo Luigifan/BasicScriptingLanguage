@@ -14,8 +14,16 @@ namespace BasicScriptingLanguageDebug
             {
                 if (System.IO.File.Exists(args[0].Trim('"')))
                 {
-                    BasicScriptingLanguage.BasicScriptFile.ExecuteScript(args[0].Trim('"'));
-                    Console.WriteLine("\nEND OF SCRIPT");
+                    try
+                    {
+                        BasicScriptingLanguage.BasicScriptFile.ExecuteScript(args[0].Trim('"'));
+                        Console.WriteLine("\nEND OF SCRIPT");
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine("ERROR EXECUTING SCRIPT");
+                        Console.WriteLine(ex.Message);
+                    }
                 }
                 else
                     Console.WriteLine("File doesn't exist: " + args[0]);
