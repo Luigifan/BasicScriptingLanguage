@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,7 +24,13 @@ namespace BasicScriptingLanguageEditor
         {
             Application.EnableVisualStyles();
             string[] args = Environment.GetCommandLineArgs();
-            SingleInstanceController controller = new SingleInstanceController();
+            SingleInstanceController controller = new SingleInstanceController();;
+            if (args.Length > 1 && args.Length == 2)
+                controller = new SingleInstanceController(args[1]);
+            else if (args.Length > 2)
+                controller = new SingleInstanceController(args);
+            else if (args.Length == 0)
+                controller = new SingleInstanceController();
             controller.Run(args);
         }
         /*static void Main(string[] args)
@@ -62,11 +69,14 @@ namespace BasicScriptingLanguageEditor
 
         private static string appGuid = "4687d67a-10e9-47c8-91f4-16cd53e03a40";
 
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern void SHChangeNotify(int wEventId, int uFlags, IntPtr dwItem1, IntPtr dwItem2);
+
         public static void RegisterFileAssociations()
         {
             Icon FileFormatIcon = BasicScriptingLanguageEditor.Properties.Resources.Format_BSL;
 
-            using (FileStream fs = new FileStream(Environment.CurrentDirectory + @"\format.ico", FileMode.Create))
+            using (FileStream fs = new FileStream(ExecutableLocation + @"\format.ico", FileMode.Create))
                 FileFormatIcon.Save(fs);
             /*
             // Initializes a new AF_FileAssociator to associate the .ABC file extension.
@@ -83,6 +93,9 @@ namespace BasicScriptingLanguageEditor
                 MessageBox.Show("File associations already registered.", "BasicScriptingLanguage Editor");*/
             string path = ExecutableLocation + "format.ico";
             Create_abc_FileAssociation(path);
+
+            SHChangeNotify(0x08000000, 0x0000, (IntPtr)null, (IntPtr)null);//SHCNE_ASSOCCHANGED SHCNF_IDLIST
+
             MessageBox.Show("Attempted file assosciation successfully", "BasicScriptingLanguage Editor");
         }
 

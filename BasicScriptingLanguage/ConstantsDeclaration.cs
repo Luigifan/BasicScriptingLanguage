@@ -10,9 +10,9 @@ namespace BasicScriptingLanguage
     class Constants
     {
         public static string CURRENTDIRECTORY = Environment.CurrentDirectory;
+        public static string SYSDIR = Environment.SystemDirectory;
+        public static string WINDIR = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
 
-        //Metadata
-        public static string SCRIPT_TITLE;
 
         public static string RetrieveConstantValue(string line)
         {
@@ -21,6 +21,10 @@ namespace BasicScriptingLanguage
             string[] splitToViewInsides = regx.Split(line);
             if (splitToViewInsides.Contains("CURRENTDIRECTORY"))
                 return CURRENTDIRECTORY;
+            if (splitToViewInsides.Contains("SYSDIR"))
+                return SYSDIR;
+            if (splitToViewInsides.Contains("WINDIR"))
+                return WINDIR;
 
             return "ayy lmao";
         }

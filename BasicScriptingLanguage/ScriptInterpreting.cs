@@ -26,6 +26,7 @@ namespace BasicScriptingLanguage
         public void ReadScript(string file)
         {
             currentScript = File.ReadAllLines(file);
+            ScriptMetadata.SetMetadata("BasicScriptingLanguage", METADATATYPE.AUTHOR);
             for (lineCount = 0; lineCount < currentScript.Count(); lineCount++ )
             {
                 string actualLine = Regex.Replace(currentScript[lineCount], " {2,}", "\t");
@@ -182,8 +183,8 @@ namespace BasicScriptingLanguage
         public string ReplaceWithVarsConstants(string replaceWith)
         {
             string finalStringReplace = replaceWith;
-            string patternConstants = @"{(.*?)}";
-            string patternVariables = @"\[(.*?)\]";
+            string patternConstants = @"{(.*?)}(.*?)";
+            string patternVariables = @"\[(.*?)\](.*?)";
 
             Regex matchConstants = new Regex(patternConstants, RegexOptions.None);
             Regex matchVariables = new Regex(patternVariables, RegexOptions.None);
@@ -195,6 +196,10 @@ namespace BasicScriptingLanguage
             {
                 if(testMatch.Value.Contains("CURRENTDIRECTORY"))
                     finalStringReplace = matchConstants.Replace(finalStringReplace, Constants.CURRENTDIRECTORY);
+                else if(testMatch.Value.Contains("SYSDIR"))
+                    finalStringReplace = matchConstants.Replace(finalStringReplace, Constants.SYSDIR);
+                else if (testMatch.Value.Contains("WINDIR"))
+                    finalStringReplace = matchConstants.Replace(finalStringReplace, Constants.WINDIR);
             }
 
             foreach(Match varMatch in matchVariables.Matches(finalStringReplace))

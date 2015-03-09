@@ -15,6 +15,7 @@ namespace BasicTestingApplication
         {
             BasicScriptFile.ExecuteScript(Environment.CurrentDirectory + @"\test.bsl");
             //MessageBox.Show("Result of variable 'hi' is " + BasicScriptFile.MainScriptInterepreter.RetrieveVariableValue("hi"));
+            Console.ReadLine();
         }
 
     }

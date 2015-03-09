@@ -17,6 +17,7 @@ namespace BasicScriptingLanguageEditor
     {
         Process InterProc = new Process();
         string _fileToPass;
+        string DebugGUID = "df58b608-1bc8-4a4a-bd1f-b4f5205658ab";
 
         public TestScript()
         {
@@ -54,7 +55,12 @@ namespace BasicScriptingLanguageEditor
         {
             if (this.InvokeRequired)
             {
-                this.Invoke((Action<FastColoredTextBoxNS.FastColoredTextBox, string>)AppendTextInBox, fastColoredTextBox1, text);
+                try
+                {
+                    this.Invoke((Action<FastColoredTextBoxNS.FastColoredTextBox, string>)AppendTextInBox, fastColoredTextBox1, text);
+                }
+                catch
+                { /*Script was prematurely murdered*/ }
             }
             else
             {
@@ -104,6 +110,16 @@ namespace BasicScriptingLanguageEditor
                 InterProc.StandardInput.WriteLine(inputTextBox.Text);
                 inputTextBox.Text = "";
             }
+        }
+
+        private void TestScript_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                InterProc.Kill();
+            }
+            catch
+            { /*debug actually killed itself like it's supposed to*/ }
         }
 
     }

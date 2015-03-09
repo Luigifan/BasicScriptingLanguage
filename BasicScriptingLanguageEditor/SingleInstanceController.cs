@@ -19,6 +19,26 @@ namespace BasicScriptingLanguageEditor
               StartupNextInstanceEventHandler(this_StartupNextInstance);
         }
 
+        public SingleInstanceController(string fileToOpen)
+        {
+            this.IsSingleInstance = true;
+
+            this.StartupNextInstance += new
+              StartupNextInstanceEventHandler(this_StartupNextInstance);
+
+            mainForm = new TabbedUI(fileToOpen);
+        }
+
+        public SingleInstanceController(string[] filesToOpen)
+        {
+            this.IsSingleInstance = true;
+
+            this.StartupNextInstance += new
+              StartupNextInstanceEventHandler(this_StartupNextInstance);
+
+            mainForm = new TabbedUI(filesToOpen);
+        }
+
         private void this_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
         {
             if(e.CommandLine != null)

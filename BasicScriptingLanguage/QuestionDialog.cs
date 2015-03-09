@@ -21,7 +21,6 @@ namespace BasicScriptingLanguage
         public static string ShowQuestionDialog(string line, int lineCount)
         {
             //(max of 3)
-            //showQuestionDialog("body of message","Yes","No","Unsure");
             //showQuestionDialog|"body","Yes","No","Unsure"
             try
             {

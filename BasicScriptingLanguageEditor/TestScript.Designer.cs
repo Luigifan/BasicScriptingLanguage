@@ -75,6 +75,7 @@
             this.fastColoredTextBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.fastColoredTextBox1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fastColoredTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastColoredTextBox1.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBox1.ForeColor = System.Drawing.Color.White;
             this.fastColoredTextBox1.IsReplaceMode = false;
             this.fastColoredTextBox1.Location = new System.Drawing.Point(3, 16);
@@ -140,6 +141,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Script Tester";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TestScript_FormClosing);
             this.Load += new System.EventHandler(this.TestScript_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBox1)).EndInit();
